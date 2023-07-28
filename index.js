@@ -17,7 +17,7 @@
 // import mongoose from "mongoose";
 // const app = express();
 // const PORT = 8080;
-// mongoose.connect("mongodb+srv://sandeep:FgBNfvhtsAlgBzPn@chimescluster.khxqh7j.mongodb.net/?retryWrites=true&w=majority").then(
+// mongoose.connect("").then(
 //     (x) => {app.listen(8080,() =>{console.log("listening")})}
 // ).then(
 //     (x) => {console.log(app.listen(PORT,() => console.log(`Connected to Database and listening on http://localhost:${PORT}`)))}
@@ -28,7 +28,7 @@
 
 
 // const connect = () => {
-//     mongoose.connect("mongodb+srv://sandeep:FgBNfvhtsAlgBzPn@chimescluster.khxqh7j.mongodb.net/?retryWrites=true&w=majority").then((x)=>{
+//     mongoose.connect("").then((x)=>{
 //         console.log("/////////////////////")
 //         // console.log(x)
 //         console.log("/////////////////////")

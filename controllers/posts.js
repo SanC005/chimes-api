@@ -3,14 +3,14 @@
 const getAllPosts = (req,res) => {
     res.send("getting all posts")
 }
-const getPost = (req,res) => {
-    res.send("getting a single post")
-}
 const addPost = (req,res) => {
-    res.send("add a post")
+    res.json(req.body)
+}
+const getPost = (req,res) => {
+    res.json({id: req.params.id})
 }
 const updatePost = (req,res) => {
-    res.send("add a post")
+    res.send("update a post")
 }
 const deletePost = (req,res) => {
     res.send("delete a post")
