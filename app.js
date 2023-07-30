@@ -6,9 +6,9 @@ const posts = require('./routes/posts')
 const connectDB = require('./database/connect')
 const path = require('path')
 require('dotenv').config()
-
+const NotFound = require('./middleware/not-found')
 //middleware 
-app.use(express.static(path.join(__dirname, '/static')))
+app.use(express.static(path.join(__dirname, '../src')))
 app.use(express.json())
 
 //routes
@@ -17,6 +17,7 @@ app.use(express.json())
 // })
 
 app.use('/api/v1/posts',posts)
+app.use(NotFound)
 
 const start = async () => {
     try {
