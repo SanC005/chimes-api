@@ -32,8 +32,18 @@ const getPost = async(req,res) => {
         res.status(500).json({msg:error})
     }
 }
-const updatePost = (req,res) => {
-    res.send("update a post")
+const updatePost = async(req,res) => {
+    try {
+        const {id:PostID} = req.params
+        const post = await Post.findOneAndUpdate({_id:PostID},req.body,{new:true,runValidators:true})
+        if(!post){
+            return res.status(404).json({msg:`No post found with id : ${PostID}`})
+        }
+        res.status(201).json({post})
+
+    } catch (error) {
+        res.status(500).json({msg:error})
+    }
 }
 const deletePost = async(req,res) => {
     try {
