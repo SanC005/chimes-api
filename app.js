@@ -4,16 +4,17 @@ const app = express()
 const port = 5001
 const posts = require('./routes/posts')
 const connectDB = require('./database/connect')
+const path = require('path')
 require('dotenv').config()
 
-
 //middleware 
+app.use(express.static(path.join(__dirname, '/static')))
 app.use(express.json())
 
 //routes
-app.get('/hello', (req,res) => {
-    res.send('Hello World!')
-})
+// app.get('/', (req,res) => {
+//     res.send('Hello World!')
+// })
 
 app.use('/api/v1/posts',posts)
 
