@@ -1,15 +1,15 @@
 console.log("nodemon working...")
 const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, './.env.local') });
+require('dotenv').config({ path: path.resolve(__dirname, '../.env.local') });
 const express = require('express')
 const app = express()
 const port = process.env.NEXT_PUBLIC_PORT || 5001
 // console.log(process.env.PORT)
-const posts = require('./routes/posts')
-const connectDB = require('./database/connect')
-const NotFound = require('./middleware/not-found')
+const posts = require('../routes/posts')
+const connectDB = require('../database/connect')
+const NotFound = require('../middleware/not-found')
 //middleware 
-app.use(express.static(path.join(__dirname,'./webpages')))
+app.use(express.static(path.join(__dirname,'../webpages')))
 app.use(express.json())
 // app.use(express.static('webpages'))
 //routes
