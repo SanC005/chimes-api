@@ -8,7 +8,7 @@ const path = require('path')
 require('dotenv').config()
 
 //middleware 
-app.use(express.static(path.join(__dirname, '/static')))
+app.use(express.static(path.join(__dirname, '../webpages')))
 app.use(express.json())
 
 //routes
