@@ -12,9 +12,9 @@ app.use(express.static(path.join(__dirname, '/static')))
 app.use(express.json())
 
 //routes
-// app.get('/', (req,res) => {
-//     res.send('Hello World!')
-// })
+app.get('/', (req,res) => {
+    res.send('Hello World!')
+})
 
 app.use('/api/v1/posts',posts)
 
@@ -27,3 +27,5 @@ const start = async () => {
     }
 }
 start();
+
+module.exports = app;
