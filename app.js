@@ -1,11 +1,12 @@
 console.log("nodemon working...")
+const path = require('path')
+require('dotenv').config({ path: path.resolve(__dirname, './.env.local') });
 const express = require('express')
 const app = express()
-const port = 5001
+const port = process.env.NEXT_PUBLIC_PORT || 5001
+// console.log(process.env.PORT)
 const posts = require('./routes/posts')
 const connectDB = require('./database/connect')
-const path = require('path')
-require('dotenv').config()
 const NotFound = require('./middleware/not-found')
 //middleware 
 app.use(express.static(path.join(__dirname, '../src')))
@@ -21,8 +22,9 @@ app.use(NotFound)
 
 const start = async () => {
     try {
-        await connectDB(process.env.MONGO_URI)
-        app.listen(port , console.log(`Server is listening on http://localhost/${port}...`))
+        // console.log(process.env.NEXT_PUBLIC_CHIMES_MONGO_URI)
+        await connectDB(process.env.NEXT_PUBLIC_CHIMES_MONGO_URI)
+        app.listen(port , console.log(`Server is listening on http://localhost:${port}...`))
     } catch (error) {
         console.log(error)
     }
