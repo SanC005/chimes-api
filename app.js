@@ -9,13 +9,13 @@ const posts = require('./routes/posts')
 const connectDB = require('./database/connect')
 const NotFound = require('./middleware/not-found')
 //middleware 
-app.use(express.static(path.join(__dirname, '../src')))
+// app.use(express.static(path.join(__dirname, '../src')))
 app.use(express.json())
 
 //routes
-// app.get('/', (req,res) => {
-//     res.send('Hello World!')
-// })
+app.get('/', (req,res) => {
+    res.send('Hello World!')
+})
 
 app.use('/api/v1/posts',posts)
 app.use(NotFound)
@@ -24,7 +24,7 @@ const start = async () => {
     try {
         // console.log(process.env.NEXT_PUBLIC_CHIMES_MONGO_URI)
         await connectDB(process.env.NEXT_PUBLIC_CHIMES_MONGO_URI)
-        app.listen(port , console.log(`Server is listening on http://localhost:${port}...`))
+        app.listen(port , console.log(`Server is listening on port ${port}...`))
     } catch (error) {
         console.log(error)
     }
