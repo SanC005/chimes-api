@@ -9,13 +9,13 @@ const posts = require('./routes/posts')
 const connectDB = require('./database/connect')
 const NotFound = require('./middleware/not-found')
 //middleware 
-// app.use(express.static(path.join(__dirname, '../src')))
+app.use(express.static(path.join(__dirname,'./webpages')))
 app.use(express.json())
-
+// app.use(express.static('webpages'))
 //routes
-app.get('/', (req,res) => {
-    res.send('Hello World!')
-})
+// app.get('/', (req,res) => {
+//     res.send('Hello World!')
+// })
 
 app.use('/api/v1/posts',posts)
 app.use(NotFound)
