@@ -22,7 +22,7 @@ const addPost = async(req,res) => {
 const getPost = async(req,res) => {
     try {
         const {id:PostID} = req.params
-        const post = await Post.findOne({_id:PostID})
+        const post = await Post.findOne({id:PostID})
         if(!post){
             return res.status(404).json({msg:`No post found with id : ${PostID}`})
         }
@@ -35,7 +35,7 @@ const getPost = async(req,res) => {
 const updatePost = async(req,res) => {
     try {
         const {id:PostID} = req.params
-        const post = await Post.findOneAndUpdate({_id:PostID},req.body,{new:true,runValidators:true})
+        const post = await Post.findOneAndUpdate({id:PostID},req.body,{new:true,runValidators:true})
         if(!post){
             return res.status(404).json({msg:`No post found with id : ${PostID}`})
         }
@@ -48,7 +48,7 @@ const updatePost = async(req,res) => {
 const deletePost = async(req,res) => {
     try {
         const {id:PostID} = req.params
-        const post = await Post.findOneAndDelete({_id:PostID})
+        const post = await Post.findOneAndDelete({id:PostID})
         if(!post){
             return res.status(404).json({msg:`No post found with id : ${PostID}`})
         }
