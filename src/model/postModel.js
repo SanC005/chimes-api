@@ -30,6 +30,16 @@ const postSchema = new mongoose.Schema({
         required:[true,'link is required field'],
         trim:true,
     },
+    visibility:{
+        type:Boolean,
+        // required:[true,'visibility is required field'],
+        default: true,
+    },
+    bookmark:{
+        type:Boolean,
+        // required:[true,'bookmark is required field'],
+        default: false,
+    },
     
 })
 
