@@ -58,8 +58,43 @@ const deletePost = async(req,res) => {
         res.status(500).json({msg:error})
     }
 }
+const getPrivate = async(req,res) => {
+    try {
+        const posts = await Post.find({visibility:false})
+        res.status(201).json({posts})
 
+    } catch (error) {
+        res.status(500).json({msg:error})
+    }
+}
+const getPublic = async(req,res) => {
+    try {
+        const posts = await Post.find({visibility:true})
+        res.status(201).json({posts})
+
+    } catch (error) {
+        res.status(500).json({msg:error})
+    }
+}
+const getBookmark = async(req,res) => {
+    try {
+        const posts = await Post.find({bookmark:true})
+        res.status(201).json({posts})
+
+    } catch (error) {
+        res.status(500).json({msg:error})
+    }
+}
+const getLiked = async(req,res) => {
+    try {
+        const posts = await Post.find({liked:true})
+        res.status(201).json({posts})
+
+    } catch (error) {
+        res.status(500).json({msg:error})
+    }
+}
 
 module.exports = {
-    getAllPosts,getPost,addPost,deletePost,updatePost
+    getAllPosts,getPost,addPost,deletePost,updatePost,getPrivate,getPublic,getBookmark,getLiked
 }

@@ -17,7 +17,7 @@ app.get('/', (req,res) => {
     res.send('Hello World!')
 })
 
-app.use('/api/v1/posts',posts)
+app.use('/api/v1',posts)
 
 const start = async () => {
     try {
