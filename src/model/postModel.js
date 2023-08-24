@@ -40,7 +40,7 @@ const postSchema = new mongoose.Schema({
         // required:[true,'bookmark is required field'],
         default: false,
     },
-    liked:{
+    like:{
         type:Boolean,
         // required:[true,'bookmark is required field'],
         default: false,
