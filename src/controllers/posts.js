@@ -82,7 +82,7 @@ const getBookmark = async (req, res) => {
 };
 const getLiked = async (req, res) => {
   try {
-    const posts = await Post.find({ liked: true });
+    const posts = await Post.find({ like: true });
     res.status(201).json({ posts });
   } catch (error) {
     res.status(500).json({ msg: error });

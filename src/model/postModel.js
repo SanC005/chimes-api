@@ -22,7 +22,7 @@ const postSchema = new mongoose.Schema({
     postTitle: {
         type:String,
         // required:[true,'id is required field'],
-        default: "no title",
+        default: "no post-title",
         trim:true,
     },
     link: {
