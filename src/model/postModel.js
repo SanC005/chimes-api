@@ -45,6 +45,15 @@ const postSchema = new mongoose.Schema({
         // required:[true,'bookmark is required field'],
         default: false,
     },
+    author:{
+        type:String,
+        //enum:['ikea',...]
+        default: "anonymous",
+    },
+    createdAt:{
+        type:Date,
+        default: Date.now()
+    }
     
 })
 
