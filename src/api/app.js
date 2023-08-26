@@ -1,5 +1,5 @@
 console.log("nodemon working...");
-//express-async errors
+require('express-async-errors');
 const express = require("express");
 const connectDB = require("../database/connect");
 const notFound = require('../middleware/not-found')
@@ -10,7 +10,7 @@ const app = express();
 const port = 5001;
 const posts = require("../routes/posts");
 const path = require("path");
-
+const jwt = require("jsonwebtoken")
 
 //middleware
 app.use(express.static(path.join(__dirname, "../webpages")));
