@@ -59,7 +59,7 @@ const getLiked = async (req, res) => {
   res.status(201).json({ posts });
 };
 const getSearch = async(req,res) => {
-  const {title,visibility,sort,fields} = req.query
+  const {title,visibility,totalLikes,sort,fields,numericFilters} = req.query
   const queryObj = {}
   if(title){
     queryObj.title={$regex: title,$options:'i'}
@@ -67,7 +67,27 @@ const getSearch = async(req,res) => {
   if(visibility){
     queryObj.visibility= visibility==='true'?true:false;
   }
-  //sort
+  if(totalLikes){
+    queryObj.totalLikes= totalLikes;
+  }
+  if(numericFilters){
+    const operatorMap = {
+      '<':'$lt',
+      '<=':'$lte',
+      '=':'$eq',
+      '>':'$gt',
+      '>=':'$gte',
+    }
+    const RegEx = /\b(<|>|>=|=|<=)\b/g
+    let filters = numericFilters.replace(RegEx,(match) => `-${operatorMap[match]}-`)
+    const options = ['totalLikes']
+    filters = filters.split(',').forEach((item) => {
+      const [field,operator,value] = item.split('-')
+      if(options.includes(field)){
+        queryObj[field] = {[operator]:Number(value)}
+      }
+    })
+  }
   let result = Post.find(queryObj)
   if(sort){
     const sortList = sort.split(',').join(' ')
