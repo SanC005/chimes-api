@@ -12,9 +12,10 @@ const {
   getBookmark,
   getLiked,
   getSearch,
+  deleteAll,
 } = require("../controllers/posts");
 
-router.route("/home").get(getAllPosts).post(addPost);
+router.route("/home").get(getAllPosts).post(addPost).delete(deleteAll);
 router.route("/search").get(getSearch)
 router.route("/home/:id").get(getPost).patch(updatePost).delete(deletePost);
 router.route("/private").get(getPrivate);

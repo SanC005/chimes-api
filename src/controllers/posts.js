@@ -58,6 +58,10 @@ const getLiked = async (req, res) => {
   const posts = await Post.find({ like: true });
   res.status(201).json({ posts });
 };
+const deleteAll = async(req,res) => {
+    const posts = await Post.deleteMany({})
+    res.status(201).json({posts})
+}
 const getSearch = async(req,res) => {
   const {title,visibility,totalLikes,sort,fields,numericFilters} = req.query
   const queryObj = {}
@@ -116,5 +120,6 @@ module.exports = {
   getPublic,
   getBookmark,
   getLiked,
-  getSearch
+  getSearch,
+  deleteAll,
 };
