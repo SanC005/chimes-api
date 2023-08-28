@@ -10,7 +10,7 @@ const app = express();
 const port = 5001;
 const posts = require("../routes/posts");
 const path = require("path");
-const jwt = require("jsonwebtoken")
+const accounts = require("../routes/accounts");
 
 //middleware
 app.use(express.static(path.join(__dirname, "../webpages")));
@@ -22,6 +22,7 @@ app.use(express.json());
 // });
 
 app.use("/api/v1", posts);
+app.use("/api/v2",accounts);
 app.use(notFound)
 app.use(errorHandlerMiddleware)
 
