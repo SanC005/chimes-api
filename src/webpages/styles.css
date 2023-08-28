@@ -1,0 +1,19 @@
+.heading{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+img{
+    background-color: skyblue;
+    width: 40px;
+    height: 40px;
+}
+.routes{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.center-text{
+    display: flex;
+    justify-content: center;
+}
