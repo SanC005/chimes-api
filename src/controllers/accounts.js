@@ -16,4 +16,8 @@ const dashboard = async(req,res) => {
     return res.status(200).json({msg:`login details recieved! Welcome ${req.user.username}!`,secret:`your number is ${num}`})
 
 }
-module.exports = {login,dashboard}
+const register = async(req,res) =>{
+    console.log('registering...')
+    return res.status(200).json({msg:`registering...`})
+}
+module.exports = {login,dashboard,register}

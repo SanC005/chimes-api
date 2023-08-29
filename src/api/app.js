@@ -22,7 +22,8 @@ app.use(express.json());
 // });
 
 app.use("/api/v1", posts);
-app.use("/api/v2",accounts);
+app.use("/api/v2/",posts);
+app.use("/api/v2/auth",accounts);
 app.use(notFound)
 app.use(errorHandlerMiddleware)
 
