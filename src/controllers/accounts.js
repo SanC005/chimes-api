@@ -1,14 +1,23 @@
-const {BadRequestError} = require('../errors')
+const {BadRequestError,UnauthenticatedError} = require('../errors')
+const User = require('../model/user')
+const {StatusCodes} = require('http-status-codes')
 const jwt = require('jsonwebtoken')
+var bcrypt = require('bcryptjs')
 const login = async(req,res) =>{
-    const {username,password} = req.body
-    if(!username || !password){
-        throw new BadRequestError("Please provide username and password")
+    const {email,password} = req.body
+    if(!email || !password){
+        throw new BadRequestError("Please provide email and password")
     }
-    const id = new Date().getDate()
-    const token = jwt.sign({id,username},process.env.JWT_SECRET,{expiresIn:'30d'})
-    console.log(username,password)
-    res.status(200).json({msg:'user created',token})
+    const user = await User.findOne({email})
+    if(!user){
+        throw new UnauthenticatedError('Invalid credentials')
+    }
+    const isCorrectPassword = await user.checkPassword(password)
+    if(!isCorrectPassword){
+        throw new UnauthenticatedError('Invalid credentials')
+    }
+    const token= user.createJWT()
+    return res.status(StatusCodes.OK).json({user:{username:user.username,email:user.email},token})
 }
 const dashboard = async(req,res) => {
     
@@ -16,4 +25,10 @@ const dashboard = async(req,res) => {
     return res.status(200).json({msg:`login details recieved! Welcome ${req.user.username}!`,secret:`your number is ${num}`})
 
 }
-module.exports = {login,dashboard}
+const register = async(req,res) =>{
+    console.log('registering...')
+    const user = await User.create({ ...req.body}) 
+    const token = user.createJWT()
+    return res.status(StatusCodes.CREATED).json({ user:{username:user.username,email:user.email,_id:user._id},token})
+}
+module.exports = {login,dashboard,register}
