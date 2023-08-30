@@ -3,11 +3,11 @@ const {StatusCodes} = require('http-status-codes')
 const {BadRequestError,NotFoundError} = require('../errors')
 const getAllPosts = async (req, res) => {
   const posts = await Post.find({}).sort('createdAt');
-  res.status(StatusCodes.OK).json({ posts,count:posts.length });
+  res.status(StatusCodes.OK).json({ count:posts.length,posts });
 };
 const getUserPosts = async (req, res) => {
   const posts = await Post.find({createdBy:req.user.id}).sort('createdAt');
-  res.status(StatusCodes.OK).json({ posts,count:posts.length });
+  res.status(StatusCodes.OK).json({ count:posts.length,posts  });
 };
 const addPost = async (req, res) => {
   // res.json(req.body)
@@ -51,19 +51,19 @@ const deletePost = async (req, res) => {
 };
 const getPrivate = async (req, res) => {
   const posts = await Post.find({ visibility: false });
-  res.status(201).json({ posts,count:posts.length });
+  res.status(201).json({ count:posts.length,posts  });
 };
 const getPublic = async (req, res) => {
   const posts = await Post.find({ visibility: true });
-  res.status(201).json({ posts,count:posts.length });
+  res.status(201).json({ count:posts.length,posts  });
 };
 const getBookmark = async (req, res) => {
   const posts = await Post.find({ bookmark: true });
-  res.status(201).json({ posts,count:posts.length });
+  res.status(201).json({ count:posts.length,posts  });
 };
 const getLiked = async (req, res) => {
   const posts = await Post.find({ like: true });
-  res.status(201).json({ posts,count:posts.length });
+  res.status(201).json({ count:posts.length,posts  });
 };
 const deleteAll = async(req,res) => {
     const posts = await Post.deleteMany({})
