@@ -17,7 +17,7 @@ const addPost = async (req, res) => {
 };
 const getPost = async (req, res) => {
   const { user:{id: UserId},params:{id: PostId} } = req;
-  const post = await Post.findOne({ _id: PostId,createdBy:UserId });
+  const post = await Post.findOne({ temp_id: PostId,createdBy:UserId });
   if (!post) {
     throw new NotFoundError(`No post found with id ${PostId}`)
   }
@@ -29,7 +29,7 @@ const updatePost = async (req, res) => {
     user:{id:UserId},
     params:{id: PostId},
    } = req;
-  const post = await Post.findOneAndUpdate({ _id: PostId,createdBy:UserId }, req.body, {
+  const post = await Post.findOneAndUpdate({ temp_id: PostId,createdBy:UserId }, req.body, {
     new: true,
     runValidators: true,
   });
@@ -43,7 +43,7 @@ const deletePost = async (req, res) => {
     user:{id:UserId},
     params:{id: PostId},
    } = req;
-  const post = await Post.findOneAndDelete({ _id:PostId,createdBy:UserId});
+  const post = await Post.findOneAndDelete({ temp_id:PostId,createdBy:UserId});
   if (!post) {
     throw new NotFoundError(`No post found with id ${PostId}`)
   }
