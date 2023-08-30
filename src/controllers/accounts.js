@@ -1,5 +1,8 @@
 const {BadRequestError} = require('../errors')
 const jwt = require('jsonwebtoken')
+const User = require('../model/user')
+const {StatusCodes} = require('http-status-codes')
+var bcrypt = require('bcryptjs')
 const login = async(req,res) =>{
     const {username,password} = req.body
     if(!username || !password){
@@ -18,6 +21,8 @@ const dashboard = async(req,res) => {
 }
 const register = async(req,res) =>{
     console.log('registering...')
-    return res.status(200).json({msg:`registering...`})
+    const user = await User.create({ ...req.body}) 
+    const token = user.createJWT()
+    return res.status(StatusCodes.CREATED).json({ user:{username:user.username,email:user.email},token})
 }
 module.exports = {login,dashboard,register}
