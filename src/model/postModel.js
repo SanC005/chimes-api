@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 // import { Schema, model } from 'mongoose';
 
 const postSchema = new mongoose.Schema({
-    // id: {
-    //     type:String,
-    //     required:[true,'id is required field'],
-    //     trim:true,
-    // },
+    temp_id: {
+        type:String,
+        required:[true,'id is required field'],
+        trim:true,
+    },
     title: {
         type:String,
         // required:[true,'id is required field'],
