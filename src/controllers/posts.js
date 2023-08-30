@@ -1,62 +1,69 @@
 const Post = require("../model/postModel");
-
+const {StatusCodes} = require('http-status-codes')
+const {BadRequestError,NotFoundError} = require('../errors')
 const getAllPosts = async (req, res) => {
-  // try {
-  const posts = await Post.find({});
-  res.status(201).json({ posts });
-  // }
-  // catch (error) {
-  // res.status(500).json({ msg: error });
-  // }
+  const posts = await Post.find({}).sort('createdAt');
+  res.status(StatusCodes.OK).json({ posts,count:posts.length });
+};
+const getUserPosts = async (req, res) => {
+  const posts = await Post.find({createdBy:req.user.id}).sort('createdAt');
+  res.status(StatusCodes.OK).json({ posts,count:posts.length });
 };
 const addPost = async (req, res) => {
   // res.json(req.body)
-
+  req.body.createdBy = req.user.id
   const post = await Post.create(req.body);
-  res.status(201).send({ post });
+  res.status(StatusCodes.CREATED).send({ post });
 };
 const getPost = async (req, res) => {
-  const { id: PostID } = req.params;
-  const post = await Post.findOne({ id: PostID });
+  const { user:{id: UserId},params:{id: PostId} } = req;
+  const post = await Post.findOne({ _id: PostId,createdBy:UserId });
   if (!post) {
-    return res.status(404).json({ msg: `No post found with id : ${PostID}` });
+    throw new NotFoundError(`No post found with id ${PostId}`)
   }
-  res.status(201).json({ post });
+  res.status(StatusCodes.OK).json({ post });
 };
 const updatePost = async (req, res) => {
-  const { id: PostID } = req.params;
-  const post = await Post.findOneAndUpdate({ id: PostID }, req.body, {
+  const { 
+    // body:{},
+    user:{id:UserId},
+    params:{id: PostId},
+   } = req;
+  const post = await Post.findOneAndUpdate({ _id: PostId,createdBy:UserId }, req.body, {
     new: true,
     runValidators: true,
   });
   if (!post) {
-    return res.status(404).json({ msg: `No post found with id : ${PostID}` });
+    throw new NotFoundError(`No post found with id ${PostId}`)
   }
-  res.status(201).json({ post });
+  res.status(StatusCodes.OK).json({ post });
 };
 const deletePost = async (req, res) => {
-  const { id: PostID } = req.params;
-  const post = await Post.findOneAndDelete({ id: PostID });
+  const { 
+    user:{id:UserId},
+    params:{id: PostId},
+   } = req;
+  const post = await Post.findOneAndDelete({ _id:PostId,createdBy:UserId});
   if (!post) {
-    return res.status(404).json({ msg: `No post found with id : ${PostID}` });
+    throw new NotFoundError(`No post found with id ${PostId}`)
   }
-  res.status(201).json({ post });
+  res.status(StatusCodes.OK).send()
 };
 const getPrivate = async (req, res) => {
   const posts = await Post.find({ visibility: false });
-  res.status(201).json({ posts });
+  res.status(201).json({ posts,count:posts.length });
 };
 const getPublic = async (req, res) => {
   const posts = await Post.find({ visibility: true });
-  res.status(201).json({ posts });
+  res.status(201).json({ posts,count:posts.length });
 };
 const getBookmark = async (req, res) => {
   const posts = await Post.find({ bookmark: true });
-  res.status(201).json({ posts });
+  res.status(201).json({ posts,count:posts.length });
 };
 const getLiked = async (req, res) => {
   const posts = await Post.find({ like: true });
-  res.status(201).json({ posts });
+  res.status(201).json({ posts,count:posts.length });
 };
 const deleteAll = async(req,res) => {
     const posts = await Post.deleteMany({})
@@ -112,6 +119,7 @@ const getSearch = async(req,res) => {
 }
 module.exports = {
   getAllPosts,
+  getUserPosts,
   getPost,
   addPost,
   deletePost,
