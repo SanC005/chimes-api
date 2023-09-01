@@ -34,7 +34,7 @@ const updatePost = async (req, res) => {
     user:{id:UserId},
     params:{id: PostId},
    } = req;
-  const post = await Post.findOneAndUpdate({ id: PostId,createdBy:UserId }, req.body, {
+  const post = await Post.findOneAndUpdate({ temp_id: PostId,createdBy:UserId }, req.body, {
     new: true,
     runValidators: true,
   });
