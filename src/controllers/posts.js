@@ -5,6 +5,11 @@ const getAllPosts = async (req, res) => {
   const posts = await Post.find({}).sort('createdAt');
   res.status(StatusCodes.OK).json({ count:posts.length,posts });
 };
+const getAllPublicPosts = async (req, res) => {
+  const posts = await Post.find({visibility:true}).sort('createdAt');
+  res.status(StatusCodes.OK).json({ count:posts.length,posts });
+};
+
 const getUserPosts = async (req, res) => {
   const posts = await Post.find({createdBy:req.user.id}).sort('createdAt');
   res.status(StatusCodes.OK).json({ count:posts.length,posts  });
@@ -29,7 +34,7 @@ const updatePost = async (req, res) => {
     user:{id:UserId},
     params:{id: PostId},
    } = req;
-  const post = await Post.findOneAndUpdate({ temp_id: PostId,createdBy:UserId }, req.body, {
+  const post = await Post.findOneAndUpdate({ id: PostId,createdBy:UserId }, req.body, {
     new: true,
     runValidators: true,
   });
@@ -50,19 +55,19 @@ const deletePost = async (req, res) => {
   res.status(StatusCodes.OK).send()
 };
 const getPrivate = async (req, res) => {
-  const posts = await Post.find({ visibility: false });
+  const posts = await Post.find({ createdBy:req.user.id,visibility: false });
   res.status(201).json({ count:posts.length,posts  });
 };
 const getPublic = async (req, res) => {
-  const posts = await Post.find({ visibility: true });
+  const posts = await Post.find({ createdBy:req.user.id,visibility: true });
   res.status(201).json({ count:posts.length,posts  });
 };
 const getBookmark = async (req, res) => {
-  const posts = await Post.find({ bookmark: true });
+  const posts = await Post.find({ createdBy:req.user.id,bookmark: true });
   res.status(201).json({ count:posts.length,posts  });
 };
 const getLiked = async (req, res) => {
-  const posts = await Post.find({ like: true });
+  const posts = await Post.find({ createdBy:req.user.id,like: true });
   res.status(201).json({ count:posts.length,posts  });
 };
 const deleteAll = async(req,res) => {
@@ -130,4 +135,5 @@ module.exports = {
   getLiked,
   getSearch,
   deleteAll,
+  getAllPublicPosts,
 };

@@ -14,6 +14,7 @@ const {
   getSearch,
   deleteAll,
   getUserPosts,
+  getAllPublicPosts
 } = require("../controllers/posts");
 
 router.route("/home").get(getUserPosts).post(addPost).delete(deleteAll);
@@ -23,5 +24,6 @@ router.route("/private").get(getPrivate);
 router.route("/public").get(getPublic);
 router.route("/bookmark").get(getBookmark);
 router.route("/likes").get(getLiked);
-router.route("/feed").get(getAllPosts);
+router.route("/feed").get(getAllPublicPosts);
+router.route("/all").get(getAllPosts);
 module.exports = router;

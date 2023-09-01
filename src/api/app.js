@@ -38,7 +38,7 @@ app.use(xss())
 // });
 
 // app.use("/api/v1", posts);
-app.use("/api/v2/posts",auth,posts);
+app.use("/api/v2/posts",posts);
 app.use("/api/v2/auth",accounts);
 app.use(notFound)
 app.use(errorHandlerMiddleware)
